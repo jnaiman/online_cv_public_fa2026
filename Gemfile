@@ -16,7 +16,6 @@ gem "kramdown-parser-gfm"   # GitHub-flavored markdown, same as GitHub Pages
 # Plugins this site uses (GitHub Pages runs these too).
 group :jekyll_plugins do
   gem "jekyll-sitemap"            # makes sitemap.xml
-  gem "jekyll-github-metadata"    # lets the Projects page show your GitHub repos
   gem "jekyll-gist"               # {% gist %} tag used in the _elements examples
 end
 

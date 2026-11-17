@@ -5,6 +5,7 @@
   {% for project in local_projects %}
 
     {%- assign project_type  = "local" -%}
+    {%- assign project_repo  = nil -%}
     {%- assign project_id    = project.name | slugify -%}
 
     {%- if project.external_img -%}
@@ -34,39 +35,88 @@
 
 
 
-  <!-- Remote Projects -->
-  {% for remote_project in page.remote_projects %}
+  <!-- Remote Projects: GitHub repositories listed in about_me/remote_repos.yml.
+       The card (name + link) is built here; its description and topic tags are
+       filled in by the visitor's browser (see the script below), so building the
+       site never needs to call the GitHub API. -->
+  {%- assign default_owner = site.repository | default: site.author.github | split: "/" | first -%}
 
-  {% if site.github.private != true and site.github.license %}
-   {%- for repo in site.github.public_repositories -%}
+  {% for remote_repo in site.data.remote_repos %}
 
-    {%- if remote_project == repo.name -%}
+    {%- assign entry = remote_repo | strip -%}
+    {%- if entry contains "/" -%}
+      {%- assign full_name = entry -%}
+    {%- elsif default_owner -%}
+      {%- assign full_name = default_owner | append: "/" | append: entry -%}
+    {%- else -%}
+      <!-- Skipping "{{ entry }}": set "repository" (or "author: github") in _config.yml, or write it as owner/name -->
+      {%- continue -%}
+    {%- endif -%}
 
-        {%- assign project = repo -%}
-        {%- assign words = project.name | split: '-' -%}
-        
-        {%- capture titlecase -%}
-          {%- for word in words -%}
-            {{ word | capitalize | append: ' ' }}
-          {%- endfor -%}
-        {%- endcapture -%}
+    {%- assign repo_name = full_name | split: "/" | last -%}
+    {%- assign words = repo_name | split: '-' -%}
+    {%- capture titlecase -%}
+      {%- for word in words -%}
+        {{ word | capitalize | append: ' ' }}
+      {%- endfor -%}
+    {%- endcapture -%}
 
-        {%- assign project_type  = "remote" -%}
-        {%- assign project_id    = project.name -%}
-        {%- assign project_img   = false -%}
-        {%- assign project_name  = titlecase | strip -%}
-        {%- assign project_desc  = project.description -%}
-        {%- assign project_url   = project.html_url -%}
-        {%- assign project_tools = project.topics -%}
-        {%- assign external      = true -%}
+    {%- assign project_type  = "remote" -%}
+    {%- assign project_id    = full_name | slugify -%}
+    {%- assign project_img   = false -%}
+    {%- assign project_name  = titlecase | strip -%}
+    {%- assign project_desc  = "" -%}
+    {%- assign project_url   = "https://github.com/" | append: full_name -%}
+    {%- assign project_tools = "" | split: "" -%}
+    {%- assign project_repo  = full_name -%}
+    {%- assign external      = true -%}
 
-        {% include projects/project-card.html %}
-
-      {%- endif -%}
-
-    {%- endfor -%}
-
-  {%- endif -%}
+    {% include projects/project-card.html %}
 
   {% endfor %}
 </div>
+
+{% if site.data.remote_repos %}
+<script>
+  // Fill in each GitHub card's description and topic tags from the GitHub API.
+  // Runs in the visitor's browser: one request per listed repository, cached for
+  // the browser session. If GitHub can't be reached the card still shows its
+  // name and links to the repository.
+  (function () {
+    var cards = document.querySelectorAll("[data-github-repo]");
+    Array.prototype.forEach.call(cards, function (card) {
+      var repo = card.getAttribute("data-github-repo");
+      var id = card.getAttribute("data-card-id");
+      var cacheKey = "github-repo:" + repo;
+
+      function fill(data) {
+        var desc = document.getElementById(id + "-desc");
+        var tools = document.getElementById(id + "-tools");
+        if (desc && data.description) desc.textContent = data.description;
+        if (tools && data.topics) {
+          data.topics.forEach(function (topic) {
+            var badge = document.createElement("span");
+            badge.className = "badge badge-pill text-primary border border-primary ml-1";
+            badge.textContent = topic;
+            tools.appendChild(badge);
+          });
+        }
+      }
+
+      var cached = null;
+      try { cached = JSON.parse(sessionStorage.getItem(cacheKey)); } catch (e) {}
+      if (cached) { fill(cached); return; }
+
+      fetch("https://api.github.com/repos/" + repo, { headers: { Accept: "application/vnd.github+json" } })
+        .then(function (response) { return response.ok ? response.json() : null; })
+        .then(function (data) {
+          if (!data) return;
+          var info = { description: data.description, topics: data.topics || [] };
+          try { sessionStorage.setItem(cacheKey, JSON.stringify(info)); } catch (e) {}
+          fill(info);
+        })
+        .catch(function () {});
+    });
+  })();
+</script>
+{% endif %}

@@ -21,23 +21,22 @@ The files and folders **you will edit** are:
 ```
 <your github username>.github.io/
 ├── _config.yml          <- PART 1 at the top: your name, title, links, etc.
-├── about_me/            <- everything on your "About" page
+├── about_me/            <- everything about you
 │   ├── about.md
 │   ├── programming-skills.yml
 │   ├── other-skills.yml
-│   └── timeline.yml
+│   ├── timeline.yml
+│   └── remote_repos.yml <- GitHub repos to show on your Projects page
 ├── projects/            <- one markdown file per project page
 │   └── 1_Vega_lite_project.md
 ├── my_assets/           <- files your projects use
 │   ├── json/            <- vega-lite/Altair chart .json files
 │   └── pngs/            <- images & screenshots
-├── pages/
-│   └── projects.html    <- links to your GitHub repos (remote_projects)
 ├── _posts/              <- blog posts (optional)
 └── python_notebooks/    <- "loose" notebooks (optional)
 ```
 
-Everything else (`_includes/`, `_layouts/`, `_sass/`, `_plugins/`, `assets/`, `Gemfile`, PART 2 of `_config.yml`) runs the site and generally does not need to be changed.  Folders starting with `_example_` hold examples you can copy from.
+Everything else (`pages/`, `_includes/`, `_layouts/`, `_sass/`, `_plugins/`, `assets/`, `Gemfile`, PART 2 of `_config.yml`) runs the site and generally does not need to be changed.  Folders starting with `_example_` hold examples you can copy from.
 
 ## General configurations
 
@@ -52,7 +51,7 @@ Note: after changing `_config.yml` you have to stop (`CTRL+C`) and restart `bund
 
 ## About page
 
-Everything is in the `about_me/` folder:
+Everything for your About page is in the `about_me/` folder:
  1. `about.md` for your general introduction
  1. `programming-skills.yml` to update your programming skills list
  1. `other-skills.yml` to update other skills
@@ -62,7 +61,7 @@ Everything is in the `about_me/` folder:
 
 Add project files in:
  * `projects/` to add project pages -- each markdown file in this folder becomes a project card on your Projects page
- * `pages/projects.html` under `remote_projects` for links to your github projects.  Note: this will ONLY link to your repos and you must specify the end of your repo URL (see example)
+ * `about_me/remote_repos.yml` for links to your GitHub repositories -- list the end of each repo's URL (e.g. `my_repo` for `https://github.com/<you>/my_repo`), or `owner/repo` for a repo owned by someone else.  Each card's description and topic tags come from the repo's "About" section on GitHub and are loaded by the visitor's browser, so they may not show up if you are offline.
 
 You can link both project pages and github repositories.  Github repos will autopopulate, pages allow you to provide more details.
 

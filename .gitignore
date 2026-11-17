@@ -1,0 +1,14 @@
+# Built site and caches -- GitHub Pages builds the site itself
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+
+# Installed gems -- every computer makes its own with "bundle install"
+# (Gemfile.lock records your Bundler/Ruby versions, which differ from student to student)
+Gemfile.lock
+vendor/
+.bundle/
+
+# OS clutter
+.DS_Store

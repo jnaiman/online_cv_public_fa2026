@@ -1,0 +1,18 @@
+# GitHub repositories to show as cards on your Projects page (after your
+# project pages).  List one repository per line, in the order you want them.
+#
+# Use the name at the end of the repository's URL:
+#   https://github.com/<your-username>/my_cool_repo   -->   - my_cool_repo
+# Repositories are looked up under the username in "repository" in _config.yml
+# (or "author: github" if that is empty).
+#
+# To show a repository owned by someone else (or by an organization), use
+# owner/name instead:
+#   https://github.com/UIUC-iSchool-DataViz/is445_bcu_fall2026  -->  - UIUC-iSchool-DataViz/is445_bcu_fall2026
+#
+# The card's description and topic tags come from the repository's "About"
+# section on GitHub.  Delete everything below (or put a "#" in front) to show
+# no repositories.
+
+- is507_spring2021
+- online_cv_public

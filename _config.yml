@@ -20,8 +20,8 @@ description         : >-
                       I am definitely not a corgi!
 baseurl             : ""   # Leave as empty quotes if you are hosting your site at <your-username>.github.io directly,
 #                            otherwise it will be hosted at <your-username>.github.io/{{base_url}}
-repository          :      # Change to <your-username> for GitHub OR, if that doesn't work, <your-username>/<your-username>.github.io
-#                            (or remove it if you don't need remote projects) -- for example, I would put "jnaiman" without the quotes after the ":" here
+repository          :      # Change to your GitHub username -- for example, I would put "jnaiman" without the quotes after the ":" here.
+#                            Used to find the repositories you list in about_me/remote_repos.yml (if empty, "author: github" below is used)
 open_new_tab        : false   # Opens external URLs in new tab (works for posts, projects and navbar only)
 
 
@@ -76,7 +76,6 @@ buymeacoffee:
 ### Plugins ###
 plugins:
   - jekyll-sitemap
-  - jekyll-github-metadata
   - jekyll-gist
 
 # Build the same way GitHub Pages does: only the plugins listed in "whitelist"
@@ -84,7 +83,6 @@ plugins:
 safe: true
 whitelist:
   - jekyll-sitemap
-  - jekyll-github-metadata
   - jekyll-gist
 gist:
   noscript: false                                       # same as GitHub Pages
