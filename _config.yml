@@ -79,7 +79,7 @@ plugins:
   - jekyll-gist
 
 # Build the same way GitHub Pages does: only the plugins listed in "whitelist"
-# run, and the custom code in _plugins/ is ignored (GitHub ignores it too).
+# run, and the custom code in _template/plugins/ is ignored (GitHub ignores it too).
 safe: true
 whitelist:
   - jekyll-sitemap
@@ -92,8 +92,13 @@ gist:
 port: 4008
 
 
-### Where the About page data lives (programming-skills.yml, other-skills.yml, timeline.yml) ###
-data_dir: about_me
+### Where things live ###
+data_dir: about_me                                      # About page data (skills, timeline, remote_repos)
+layouts_dir: _template/layouts                          # Everything that runs the site lives in _template/
+includes_dir: _template/includes
+plugins_dir: _template/plugins
+sass:
+  sass_dir: _template/sass
 
 
 ### Navbar Settings ###
@@ -103,17 +108,10 @@ nav_exclude:                                            # The following paths ar
   - pages/404.html
   - pages/index.md
   - projects/**                                         # Individual project pages (they show up on the Projects page instead)
-  - documentation/partials/**                           # For Documentation Only
 
 
 ### Posts ###
 permalink: /blog/:title
-
-
-### Collections ###
-collections:
-  elements:                                             # For Documentation Only
-    output: true                                        # For Documentation Only
 
 
 ### Disqus ###
@@ -134,11 +132,6 @@ defaults:
       path: "projects"                                  # Every file in the projects/ folder is a project page
     values:
       layout: "page"
-  - scope:                                              # For Documentation Only
-      path: ""                                          # For Documentation Only
-      type: "elements"                                  # For Documentation Only
-    values:                                             # For Documentation Only
-      layout: "element"                                 # For Documentation Only
   - scope:
       path: ""
       type: "posts"

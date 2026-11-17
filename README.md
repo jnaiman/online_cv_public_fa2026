@@ -132,7 +132,7 @@ Your programming skills and your other skills, each with a progress bar.  Each s
   color: danger         # bar color: primary, secondary, success, info, warning, danger, light or dark
 ```
 
-The colors are defined in `_sass/_variables.scss`.  Leave `color:` empty for the default blue.
+The colors are defined in `_template/sass/_variables.scss`.  Leave `color:` empty for the default blue.
 
 ### `about_me/timeline.yml`
 
@@ -183,7 +183,34 @@ This is where you'll spend most of your time: each markdown file in this folder 
   <vegachart schema-url="{{ site.baseurl }}/my_assets/json/cars.json" style="width: 100%"></vegachart>
   ```
 
-See the `_example_projects/` folder for more examples (copy one into `projects/` to try it out).
+See the `_template/examples/projects/` folder for more examples (copy one into `projects/` to try it out).
+
+### Extra page elements (carousels, buttons, videos, ...)
+
+Want an image carousel, a YouTube video or a button in a project?  The folder **`_template/examples/elements/`** has an example of every page element the template supports.  Each file shows the code to copy, inside `{% raw %} ... {% endraw %}` -- copy just the part *between* those two lines into your project's `.md` file.
+
+| Element | Example file | Code to copy into your page |
+|---|---|---|
+| Image carousel (slideshow) | `18-carousel.html` | see below |
+| Button | `11-buttons.html` | `{% include elements/button.html link="https://github.com" text="GitHub" %}` |
+| YouTube video | `19-videos.html` | `{% include elements/video.html id="aZNbUITN-mA" %}` (the `id` is the end of the video's YouTube URL) |
+| Figure with a caption | `17-figures.html` | `{% include elements/figure.html image="https://bit.ly/2N69TKO" caption="The Ocean" %}` |
+| Highlighted text | `03-highlight.html` | `{% include elements/highlight.html text="I am highlighted text." %}` |
+| List of links / table of contents | `14-list-group.html`, `15-table-of-contents.html` | see the example files |
+| GitHub gist | `10-github-gists.html` | `{% gist <your gist id> %}` |
+| Headers, emphasis, links, lists, code, tables, task lists, ... | the other files | plain markdown/HTML -- just copy |
+
+For example, a carousel of your own images (one image per line, between the `capture` lines):
+
+```
+{% capture carousel_images %}
+{{ site.baseurl }}/my_assets/pngs/first_image.png
+{{ site.baseurl }}/my_assets/pngs/second_image.png
+{% endcapture %}
+{% include elements/carousel.html %}
+```
+
+(Only one carousel per page works.)  The code behind each `{% include elements/... %}` is in `_template/includes/elements/`.
 
 ### `my_assets/`
 
@@ -205,14 +232,14 @@ We won't go over these in detail -- they are listed here as reference (useful if
 | `Gemfile` | Tells Bundler which Ruby packages (gems) to install.  `bundle install` reads it and writes the exact versions it picked to `Gemfile.lock` (that file is specific to your computer and isn't uploaded to GitHub).  You don't need to modify it unless packages become incompatible with your version of Ruby/Jekyll. |
 | `.gitignore` | Files git should ignore, like the built site (`_site/`) and `Gemfile.lock`. |
 | `pages/` | The main pages of your site: `projects.html` (the Projects page), `blog.html`, `index.md` (the landing page), `tags.html`, `404.html` and `search.json`. |
-| `_posts/` | Blog posts.  File names must start with the date: `YYYY-MM-DD-title.md`.  They're mostly markdown with settings (title, tags, etc.) at the top -- see `_example_posts/` for examples.  The blog is hidden by default (see `_config.yml` above). |
-| `_example_projects/`, `_example_posts/` | Example projects and blog posts to look at for ideas once you've started building your own.  These are not part of your site. |
-| `_layouts/` | Different layouts for different kinds of pages (`default.html`, `page.html`, `post.html`, ...). |
-| `_includes/` | Pieces of pages, e.g. `_includes/projects/project-card.html` determines how each project card looks and `_includes/projects/index.html` the Projects page. |
-| `_sass/` | The site's styling.  Colors are in `_sass/_variables.scss`. |
+| `_posts/` | Blog posts.  File names must start with the date: `YYYY-MM-DD-title.md`.  They're mostly markdown with settings (title, tags, etc.) at the top -- see `_template/examples/posts/` for examples.  The blog is hidden by default (see `_config.yml` above). |
 | `assets/` | Files the template itself uses: JavaScript (including the vega-lite libraries in `assets/js`), CSS and the favicon.  Put your own files in `my_assets/` instead. |
-| `_plugins/` | Custom Jekyll plugins from the [4dcu.be template](https://github.com/4dcu-be/4dcu.be).  Note: GitHub Pages doesn't run custom plugins, so neither does this template (your interactive charts are drawn by `assets/js/justcharts.js` instead). |
-| `_elements/` | Documentation examples of page elements (buttons, figures, carousels, ...) from portfolYOU. |
+| `_template/` | Everything that makes the site look and work the way it does -- you don't need to edit anything in here.  It contains the folders below. |
+| `_template/layouts/` | Different layouts for different kinds of pages (`default.html`, `page.html`, `post.html`, ...). |
+| `_template/includes/` | Pieces of pages, e.g. `_template/includes/projects/project-card.html` determines how each project card looks and `_template/includes/projects/index.html` the Projects page. |
+| `_template/sass/` | The site's styling.  Colors are in `_template/sass/_variables.scss`. |
+| `_template/plugins/` | Custom Jekyll plugins from the [4dcu.be template](https://github.com/4dcu-be/4dcu.be).  Note: GitHub Pages doesn't run custom plugins, so neither does this template (your interactive charts are drawn by `assets/js/justcharts.js` instead). |
+| `_template/examples/` | Examples to look at for ideas once you've started building your own: `projects/` and `posts/` (copy one into `projects/` or `_posts/` to try it out), and `elements/` -- examples of page elements (carousels, buttons, videos, ...) you can use in your pages (see [Extra page elements](#extra-page-elements-carousels-buttons-videos-)).  These are not part of your site. |
 
 ---
 
@@ -225,7 +252,7 @@ This is an amalgamation of [portfolYOU](https://github.com/YoussefRaafatNasry/po
  * also progress bars for skills are modified to contain words, not percentages
 
 [4dcu.be](https://github.com/4dcu-be/4dcu.be)
- * vega-lite additions -- found in the `_plugins` folder and the vega-added things in `assets/js`
+ * vega-lite additions -- found in the `_template/plugins` folder and the vega-added things in `assets/js`
 
 <details>
 <summary>Old notes on how this template was created</summary>
