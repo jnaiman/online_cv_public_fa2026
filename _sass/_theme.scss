@@ -9,7 +9,7 @@
 }
 
 #theme-toggler:before {
-  @include themed(content, "🌙", "🌞");
+  @include themed(content, "\1F319", "\1F31E"); // moon & sun emoji (escaped so the build works without a UTF-8 terminal)
 }
 
 .navbar-themed {

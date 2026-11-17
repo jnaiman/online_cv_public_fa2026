@@ -1,7 +1,8 @@
 <div class="card-columns m-3 mt-5">
 
-  <!-- Local Projects -->
-  {% for project in site.projects %}
+  <!-- Local Projects: every page inside the projects/ folder, ordered by file name -->
+  {%- assign local_projects = site.pages | where_exp: "p", "p.path contains 'projects/'" | sort: "path" -%}
+  {% for project in local_projects %}
 
     {%- assign project_type  = "local" -%}
     {%- assign project_id    = project.name | slugify -%}
@@ -14,7 +15,7 @@
   {%- endif -%}
   
 
-    {%- assign project_name  = project.name -%}
+    {%- assign project_name  = project.title -%}
     {%- assign project_desc  = project.description -%}
     {%- assign project_tools = project.tools -%}
 

@@ -1,60 +1,107 @@
-### How to use this document
-# 1. Fill in your info
-# 2. Re-excecute the build in the command line with: bundle exec jekyll serve
-# 3. Push to github
-# NOTE: it looks like you need to rebuild + repush everytime you update this _config.yml file
+###############################################################################
+#  HOW TO USE THIS FILE
+#   1. Fill in your info in PART 1 below (you should not need to touch PART 2)
+#   2. Stop (CTRL+C) and restart your local site:  bundle exec jekyll serve
+#      (changes to this file are NOT picked up by live reload -- always restart)
+#   3. Push to GitHub
+#
+#  Note: GitHub Pages only reads a file named exactly "_config.yml", so this
+#  file has to keep the underscore in its name.
+###############################################################################
+
+
+###############################################################################
+#  PART 1: YOUR SETTINGS -- edit these!
+###############################################################################
 
 ### Site Settings ###
-title               : IS445 Jekyll Template 
+title               : IS445 Jekyll Template
 description         : >-
                       I am definitely not a corgi!
-baseurl             : ""   # Change to empty quotes if you are hosting your site at <your-username>.github.io directly,
-#                                             otherwise will be hosted at <your-username>.github.io/{{base_url}}
-repository          :                     # Change to <your-username> for github OR, if that doesn't work <your-username>/<your-username>.github.io (or remove it if you don't need remote projects) -- for example, I would put "jnaiman" without the quotes after the ":" here
-open_new_tab        : false                             # Opens external URLs in new tab (works for posts, projects and navbar only)
+baseurl             : ""   # Leave as empty quotes if you are hosting your site at <your-username>.github.io directly,
+#                            otherwise it will be hosted at <your-username>.github.io/{{base_url}}
+repository          :      # Change to <your-username> for GitHub OR, if that doesn't work, <your-username>/<your-username>.github.io
+#                            (or remove it if you don't need remote projects) -- for example, I would put "jnaiman" without the quotes after the ":" here
+open_new_tab        : false   # Opens external URLs in new tab (works for posts, projects and navbar only)
 
+
+### Author Info ###
+# Un-comment (remove the "#") any accounts you want shown as icons under your name.
+author:
+  name              : A. P. Corgi
+  image             : https://media.tenor.com/8RcIoWTKYR4AAAAe/scuze-corgi.png
+  email             : username@domain.com
+  github            : jnaiman # JPN
+  twitter           : your_username
+  youtube           : your_channel_name
+# behance           : your_username
+# dribbble          : your_username
+# facebook          : your_username
+# gitlab            : your_username
+# instagram         : your_username
+# kaggle            : your_username
+# linkedin          : your_username
+# medium            : your_username
+# soundcloud        : your_username
+# spotify           : your_username
+# stackoverflow     : your_user_id
+# tumblr            : your_username.tumblr.com
+# twitch            : your_username
+# vimeo             : your_username
+# keybase           : your_username
+
+
+### Buy me a coffee (optional) ###
+# See https://www.buymeacoffee.com/
+buymeacoffee:
+  enabled: false
+  username: your_username
+  color: "#007bff"
+  message: "Thank you for visiting."                    # Message to be displayed aside from the button for a few seconds.
+  description: "Support me on Buy me a coffee!"
+
+
+# Have other things stored in your github.io repo that should NOT be part of
+# your website? Add them to the "exclude" list near the bottom of PART 2.
+
+
+###############################################################################
+#  PART 2: ADVANCED SETTINGS -- you generally do NOT need to change anything
+#  below this line.
+###############################################################################
 
 ### Plugins ###
 plugins:
-  - jekyll-archives
   - jekyll-sitemap
-  - jekyll-paginate-v2
-  - mini_magick
+  - jekyll-github-metadata
+  - jekyll-gist
 
-### To specify which port to host locally on -- use if you have multiple sites you want to host 
+# Build the same way GitHub Pages does: only the plugins listed in "whitelist"
+# run, and the custom code in _plugins/ is ignored (GitHub ignores it too).
+safe: true
+whitelist:
+  - jekyll-sitemap
+  - jekyll-github-metadata
+  - jekyll-gist
+gist:
+  noscript: false                                       # same as GitHub Pages
+
+
+### Port to host on locally -- change if you have multiple sites you want to host at once ###
 port: 4008
+
+
+### Where the About page data lives (programming-skills.yml, other-skills.yml, timeline.yml) ###
+data_dir: about_me
+
 
 ### Navbar Settings ###
 nav_exclude:                                            # The following paths are excluded from navbar
   - pages/tags.html
   - pages/404.html
   - pages/index.md
+  - projects/**                                         # Individual project pages (they show up on the Projects page instead)
   - documentation/partials/**                           # For Documentation Only
-
-
-### Author Info ###
-author:
-  name              : A. P. Corgi
-  image             : https://media.tenor.com/8RcIoWTKYR4AAAAe/scuze-corgi.png
-#  behance           : your_username
-# dribbble          : your_username
-  email             : username@domain.com
-#  facebook          : your_username
-  github            : jnaiman # JPN
-# gitlab            : your_username
-# instagram         : your_username
-# kaggle            : your_username
-#  linkedin          : your_username
-#  medium            : your_username
-# soundcloud        : your_username
-# spotify           : your_username
-# stackoverflow     : your_user_id
-# tumblr            : your_username.tumblr.com
-#  twitch            : your_username
-  twitter           : your_username
-#  vimeo             : your_username
-  youtube           : your_channel_name
-# keybase           : your_username
 
 
 ### Posts ###
@@ -63,9 +110,6 @@ permalink: /blog/:title
 
 ### Collections ###
 collections:
-  projects:
-    output: true
-    permalink: /projects/:name
   elements:                                             # For Documentation Only
     output: true                                        # For Documentation Only
 
@@ -82,21 +126,10 @@ analytics:
     tracking_id: your-google-tracking-id
 
 
-### Buy me a coffee ###
-# See https://www.buymeacoffee.com/
-buymeacoffee:
-  enabled: false
-  username: your_username
-  color: "#007bff"
-  message: "Thank you for visiting."                    # Message to be displayed aside from the button for a few seconds.
-  description: "Support me on Buy me a coffee!"
-
-
-### Defaults for collections ###
+### Defaults ###
 defaults:
   - scope:
-      path: ""
-      type: "projects"
+      path: "projects"                                  # Every file in the projects/ folder is a project page
     values:
       layout: "page"
   - scope:                                              # For Documentation Only
@@ -108,11 +141,36 @@ defaults:
       path: ""
       type: "posts"
     values:
-      comments: false                                   # Set to true to enable disqus comments
+      layout: "post"
+      comments: false                                  # Set to true to enable disqus comments
+
+
+### Social media icons used for the "author" accounts in PART 1 ###
+# Icons from https://fontawesome.com/icons, colors from https://brandcolors.net/
+social_media:
+  behance       : { url: "https://www.behance.net/",          icon: "fab fa-behance",        color: "1769ff" }
+  dribbble      : { url: "https://dribbble.com/",             icon: "fab fa-dribbble",       color: "444444" }
+  email         : { url: "mailto:",                           icon: "fas fa-envelope",       color: "db4437" }
+  facebook      : { url: "https://www.facebook.com/",         icon: "fab fa-facebook",       color: "3b5998" }
+  github        : { url: "https://www.github.com/",           icon: "fab fa-github",         color: "333333" }
+  gitlab        : { url: "https://www.gitlab.com/",           icon: "fab fa-gitlab",         color: "fca326" }
+  instagram     : { url: "https://www.instagram.com/",        icon: "fab fa-instagram",      color: "405de6" }
+  kaggle        : { url: "https://www.kaggle.com/",           icon: "fab fa-kaggle",         color: "20beff" }
+  linkedin      : { url: "https://www.linkedin.com/in/",      icon: "fab fa-linkedin-in",    color: "007bb5" }
+  medium        : { url: "https://medium.com/@",              icon: "fab fa-medium",         color: "00ab6c" }
+  soundcloud    : { url: "https://www.soundcloud.com/",       icon: "fab fa-soundcloud",     color: "ff8800" }
+  spotify       : { url: "https://open.spotify.com/user/",    icon: "fab fa-spotify",        color: "1db954" }
+  stackoverflow : { url: "https://stackoverflow.com/u/",      icon: "fab fa-stack-overflow", color: "f48024" }
+  tumblr        : { url: "https://",                          icon: "fab fa-tumblr",         color: "35465c" }
+  twitch        : { url: "https://www.twitch.tv/",            icon: "fab fa-twitch",         color: "6441a5" }
+  twitter       : { url: "https://www.twitter.com/",          icon: "fab fa-twitter",        color: "1da1f2" }
+  vimeo         : { url: "https://www.vimeo.com/",            icon: "fab fa-vimeo-v",        color: "162221" }
+  youtube       : { url: "https://www.youtube.com/",          icon: "fab fa-youtube",        color: "ff0000" }
+  keybase       : { url: "https://www.keybase.io/",           icon: "fab fa-keybase",        color: "66ccff" }
 
 
 ### Exclude from processing ###
-## Add yours here if you have other stuff in your github.io page!!!**
+## Add yours here if you have other stuff in your github.io page!!!
 exclude:
   - README.md
   - README.md~
@@ -120,7 +178,11 @@ exclude:
   - LICENSE.md
   - LICENSE.md~
   - config.yml~
+  - Gemfile
+  - Gemfile.lock
   - "*.log"
   - "*.ipynb"
   - "python_notebooks/*"
+  - "about_me/*.yml"                                    # read as data (see data_dir above), not copied to the site
   - vendor
+  - .bundle
